@@ -1,0 +1,20 @@
+{
+  "name": "agr-custom-dropdown",
+  "version": "1.0.34",
+  "description": "A custom and modern dropdown list with a search bar, built in React",
+  "main": "./dist/CustomDropdown.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel CustomDropdown.tsx --out-dir dist --extensions \".tsx\" --source-maps inline && cp CustomDropdown.css dist/CustomDropdown.css"
+  },
+  "author": "AGR",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.18.6"
+  },
+  "dependencies": {
+    "react": "^18.2.0"
+  }
+}
