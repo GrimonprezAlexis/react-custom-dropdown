@@ -8,6 +8,7 @@ type Option = {
 type Props = {
   options: Option[];
   onChange: (selectedOption: Option) => void;
+  required?: boolean;
 };
 
 const CustomDropdown: React.FC<Props> = (props) => {
@@ -19,11 +20,20 @@ const CustomDropdown: React.FC<Props> = (props) => {
       option.label.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
   );
 
+  const handleFocus = () => {
+    setShowOptions(true);
+  };
+
+  const handleBlur = () => {
+    setTimeout(() => setShowOptions(false), 200);
+  };
+
+
   return (
     <div className="custom-select">
       <input
         type="text"
-        className="custom-select__input"
+        className={`custom-select__input ${props.required && !selectedOption ? "required" : ""}`}
         placeholder="Search option"
         value={selectedOption ? selectedOption.label : searchTerm}
         onChange={(e) => {
@@ -32,8 +42,8 @@ const CustomDropdown: React.FC<Props> = (props) => {
           }
           setSearchTerm(e.target.value);
         }}
-        onFocus={() => setShowOptions(true)}
-        onBlur={() => setTimeout(() => setShowOptions(false), 200)}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
       />
       <ul className={showOptions ? "custom-select__options show" : "custom-select__options hide"}>
         {filteredOptions.map((option, index) => (
