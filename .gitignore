@@ -8,3 +8,6 @@
 
 # other
 .eslintcache
+
+.npmignore
+.npmrc
