@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import "./CustomDropdown.css";
 type Option = {
@@ -15,11 +16,13 @@ const CustomDropdown: React.FC<Props> = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [showOptions, setShowOptions] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState(0);
+
   const filteredOptions = props.options.filter(
-    (option) =>
-      option.label.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
+    (option) => option.label.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
   );
 
+  // User events
   const handleFocus = () => {
     setShowOptions(true);
   };
@@ -28,6 +31,42 @@ const CustomDropdown: React.FC<Props> = (props) => {
     setTimeout(() => setShowOptions(false), 200);
   };
 
+  // Keyboard events
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "ArrowDown") {
+      handleArrowDown(e);
+    }
+    if (e.key === "ArrowUp") {
+      handleArrowUp(e);
+    }
+    if (e.key === "Enter") {
+      handleEnter(e);
+    }
+  };
+
+  // Arrow Actions
+  const handleArrowDown = (e) => {
+    e.preventDefault();
+    setSelectedOptionIndex(
+      Math.min(selectedOptionIndex + 1, filteredOptions.length - 1)
+    );
+  };
+
+  const handleArrowUp = (e) =>{
+    e.preventDefault();
+    setSelectedOptionIndex(Math.max(selectedOptionIndex - 1, 0));
+  };
+
+  const handleEnter = (e) => {
+    e.preventDefault();
+    setSelectedOptionIndex(Math.max(selectedOptionIndex - 1, 0));
+    setShowOptions(false);
+    setSearchTerm("");
+    setSelectedOption(filteredOptions[selectedOptionIndex]);
+    if (props.onChange) {
+      props.onChange(filteredOptions[selectedOptionIndex]);
+    }
+  };
 
   return (
     <div className="custom-select">
@@ -44,11 +83,13 @@ const CustomDropdown: React.FC<Props> = (props) => {
         }}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        onKeyDown={handleKeyDown}
+
       />
       <ul className={showOptions ? "custom-select__options show" : "custom-select__options hide"}>
         {filteredOptions.map((option, index) => (
           <li
-            className="custom-select__option"
+            className={`custom-select__option ${index === selectedOptionIndex ? "selected" : ""}`}
             key={index}
             onClick={() => {
               setSelectedOption(option);

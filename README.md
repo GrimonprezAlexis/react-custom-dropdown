@@ -3,11 +3,12 @@
 A simple and customizable dropdown component built with React and TypeScript.
 
 ### Features
-- Searchable dropdown list
-- Customizable styles
+- Searchable dropdown list with the input field
+- Select an option with a click
 - On change event
-- Ability to display selected option in the input field
-- Hide dropdown options by default
+- Keyboard navigation using the arrow keys to move up and down the options
+- Required field validation optionnel
+- Customizable styles
 
 ## Installation
 You can install the CustomDropdown component using npm:
@@ -17,6 +18,11 @@ or
 
 ## Usage
 Here is a basic example of how to use the CustomDropdown component:
+
+- Import the `CustomDropdown` component into your React project.
+- Pass in an array of `options` as a prop to the component, where each option is an object with `label` and `value` properties.
+- Optionally pass a callback function as the `onChange` prop to handle the selected option.
+- Use the `required` prop to specify if the dropdown is a required field (default is `false`).
 
 ```react
 import React, { useState } from "react";
@@ -43,13 +49,19 @@ const App = () => {
 export default App;
 ```
 
+## Keyboard Actions
+- Use the up and down arrow keys to navigate the options.
+- Press Enter to select the currently highlighted option.
+- Press Esc to close the options dropdown.
+
 ## Props
 The CustomDropdown component takes the following props:
 
 | Prop  | Type  | Required | Description
 | :------------ |:---------------:| -----:| ------------:|
-| `options`      | `Option[]` | Yes | An array of objects representing the options in the dropdown list. Each object should have a label and a value property.
+| `options`      | `Option[]` | Yes | An array of objects representing the options in the dropdown list. Each object should have a `label` and a `value` property.
 | `onChange`      | `(selectedOption: Option) => void`        |   Yes | A callback function that is called when an option is selected. The selected option is passed as a parameter to the callback function.
+| `required`      | `boolean` | No | Indicates if the dropdown is required or not. If the property is present and is set to true, the dropdown will have a required class.
 ----
 
 ## Customizing the styles
