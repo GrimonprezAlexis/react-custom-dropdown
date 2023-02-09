@@ -1,3 +1,5 @@
+## agr-custom-dropdown
+
 A simple and customizable dropdown component built with React and TypeScript.
 
 ### Features
@@ -9,8 +11,10 @@ A simple and customizable dropdown component built with React and TypeScript.
 
 ## Installation
 You can install the CustomDropdown component using npm:
-`npm install agr-custom-dropdown` or `yarn add agr-custom-dropdown`
-`
+`npm install agr-custom-dropdown` 
+or 
+`yarn add agr-custom-dropdown`
+
 ## Usage
 Here is a basic example of how to use the CustomDropdown component:
 
