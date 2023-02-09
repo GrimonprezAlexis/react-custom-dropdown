@@ -1,6 +1,6 @@
 {
   "name": "agr-custom-dropdown",
-  "version": "1.0.34",
+  "version": "1.0.0",
   "description": "A custom and modern dropdown list with a search bar, built in React",
   "main": "./dist/CustomDropdown.js",
   "scripts": {
@@ -9,6 +9,19 @@
   },
   "author": "AGR",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GrimonprezAlexis/CustomDropdown.git"
+  },
+  "keywords": [
+    "React",
+    "Custom",
+    "Modal"
+  ],
+  "bugs": {
+    "url": "https://github.com/GrimonprezAlexis/CustomDropdown/issues"
+  },
+  "homepage": "https://github.com/GrimonprezAlexis/CustomDropdown#readme",
   "devDependencies": {
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
