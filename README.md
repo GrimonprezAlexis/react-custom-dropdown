@@ -1,5 +1,3 @@
-## agr-custom-dropdown
-
 A simple and customizable dropdown component built with React and TypeScript.
 
 ### Features
