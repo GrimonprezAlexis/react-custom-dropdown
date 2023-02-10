@@ -60,9 +60,10 @@
 .required-message {
   font-size: small;
   font-size: 14px;
-  margin-top: 5px;
+  margin-top: 0;
   text-align: center;
   background-color: #fd7e14;
-  color: white;
+  color: #ffffff;
+  padding: 2px;
 }
 

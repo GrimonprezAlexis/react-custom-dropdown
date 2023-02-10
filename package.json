@@ -1,6 +1,6 @@
 {
-  "name": "agr-custom-dropdown",
-  "version": "1.0.0",
+  "name": "@grimonprezalexis/custom-dropdown",
+  "version": "1.0.1",
   "description": "A custom and modern dropdown list with a search bar, built in React",
   "main": "./dist/CustomDropdown.js",
   "scripts": {
