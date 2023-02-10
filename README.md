@@ -24,6 +24,7 @@ Here is a basic example of how to use the CustomDropdown component:
 - Pass in an array of `options` as a prop to the component, where each option is an object with `label` and `value` properties.
 - Optionally pass a callback function as the `onChange` prop to handle the selected option.
 - Use the `required` prop to specify if the dropdown is a required field (default is `false`).
+- Use `requiredMessage` prop to specify a required message (if required is set to true).
 
 ```react
 import React, { useState } from "react";
@@ -63,7 +64,7 @@ The CustomDropdown component takes the following props:
 | `options`      | `Option[]` | Yes | An array of objects representing the options in the dropdown list. Each object should have a `label` and a `value` property.
 | `onChange`      | `(selectedOption: Option) => void`        |   Yes | A callback function that is called when an option is selected. The selected option is passed as a parameter to the callback function.
 | `required`      | `boolean` | No | Indicates if the dropdown is required or not. If the property is present and is set to true, the dropdown will have a required class.
-| `requiredMessage`      | `string` | No | Message, uf the property required is set to true (default 'this field is required')
+| `requiredMessage`      | `string` | No | Message, if the property required is set to true (default 'this field is required')
 ----
 
 ## Customizing the styles
