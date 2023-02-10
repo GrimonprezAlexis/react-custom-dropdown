@@ -8,6 +8,7 @@ A simple and customizable dropdown component built with React and TypeScript.
 - On change event
 - Keyboard navigation using the arrow keys to move up and down the options
 - Required field validation optionnel
+- Required message optionnel
 - Customizable styles
 
 ## Installation
@@ -62,6 +63,7 @@ The CustomDropdown component takes the following props:
 | `options`      | `Option[]` | Yes | An array of objects representing the options in the dropdown list. Each object should have a `label` and a `value` property.
 | `onChange`      | `(selectedOption: Option) => void`        |   Yes | A callback function that is called when an option is selected. The selected option is passed as a parameter to the callback function.
 | `required`      | `boolean` | No | Indicates if the dropdown is required or not. If the property is present and is set to true, the dropdown will have a required class.
+| `requiredMessage`      | `string` | No | Message, uf the property required is set to true (default 'this field is required')
 ----
 
 ## Customizing the styles

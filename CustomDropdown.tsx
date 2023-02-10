@@ -10,13 +10,15 @@ type Props = {
   options: Option[];
   onChange: (selectedOption: Option) => void;
   required?: boolean;
+  requiredMessage?: string;
 };
 
 const CustomDropdown: React.FC<Props> = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [showOptions, setShowOptions] = useState(false);
+  const [showOptions, setShowOptions] = useState(undefined);
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(0);
+  const requiredMessage = props.requiredMessage || "This field is required";
 
   const filteredOptions = props.options.filter(
     (option) => option.label.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
@@ -72,7 +74,7 @@ const CustomDropdown: React.FC<Props> = (props) => {
     <div className="custom-select">
       <input
         type="text"
-        className={`custom-select__input ${props.required && !selectedOption ? "required" : ""}`}
+        className={`custom-select__input ${(props.required && !selectedOption && showOptions !== undefined) ? "required" : ""}`}
         placeholder="Search option"
         value={selectedOption ? selectedOption.label : searchTerm}
         onChange={(e) => {
@@ -103,6 +105,7 @@ const CustomDropdown: React.FC<Props> = (props) => {
           </li>
         ))}
       </ul>
+      {(props.required && !selectedOption && showOptions !== undefined) && <span className="required-asterisk">{requiredMessage}</span>}
     </div>
   );
 };
