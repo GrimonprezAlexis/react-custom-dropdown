@@ -105,7 +105,7 @@ const CustomDropdown: React.FC<Props> = (props) => {
           </li>
         ))}
       </ul>
-      {(props.required && !selectedOption && showOptions !== undefined) && <span className="required-asterisk">{requiredMessage}</span>}
+      {(props.required && !selectedOption && showOptions !== undefined) && <span className="required-message">{requiredMessage}</span>}
     </div>
   );
 };
