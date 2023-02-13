@@ -1,6 +1,6 @@
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./CustomDropdown.css";
+
 type Option = {
   label: string;
   value: string | number;
@@ -11,42 +11,40 @@ type Props = {
   onChange: (selectedOption: Option) => void;
   required?: boolean;
   requiredMessage?: string;
+  forceRequired?: boolean;
+  placeHolder?: string;
 };
 
-const CustomDropdown: React.FC<Props> = (props) => {
+const CustomDropdown: React.FC<Props> = ({
+  options,
+  onChange,
+  required,
+  requiredMessage = "This field is required",
+  forceRequired,
+  placeHolder = "Search or select options...",
+}) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [showOptions, setShowOptions] = useState(undefined);
+  const [showOptions, setShowOptions] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(0);
-  const requiredMessage = props.requiredMessage || "This field is required";
+  const [filteredOptions, setFilteredOptions] = useState(options);
 
-  const filteredOptions = props.options.filter(
-    (option) => option.label.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1
-  );
+  useEffect(() => {
+    setFilteredOptions(
+      options.filter((option) =>
+        option.label.toLowerCase().startsWith(searchTerm.toLowerCase())
+      )
+    );
+  }, [searchTerm, options]);
 
-  // User events
-  const handleFocus = () => {
-    setShowOptions(true);
+  const handleFocus = () => setShowOptions(true);
+  const handleBlur = () => setTimeout(() => setShowOptions(false), 200);
+  const handleKeyDown = (e) => {
+    if (e.key === "ArrowDown") handleArrowDown(e);
+    if (e.key === "ArrowUp") handleArrowUp(e);
+    if (e.key === "Enter") handleEnter(e);
   };
 
-  const handleBlur = () => {
-    setTimeout(() => setShowOptions(false), 200);
-  };
-
-  // Keyboard events
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "ArrowDown") {
-      handleArrowDown(e);
-    }
-    if (e.key === "ArrowUp") {
-      handleArrowUp(e);
-    }
-    if (e.key === "Enter") {
-      handleEnter(e);
-    }
-  };
-
-  // Arrow Actions
   const handleArrowDown = (e) => {
     e.preventDefault();
     setSelectedOptionIndex(
@@ -54,19 +52,18 @@ const CustomDropdown: React.FC<Props> = (props) => {
     );
   };
 
-  const handleArrowUp = (e) =>{
+  const handleArrowUp = (e) => {
     e.preventDefault();
     setSelectedOptionIndex(Math.max(selectedOptionIndex - 1, 0));
   };
 
   const handleEnter = (e) => {
     e.preventDefault();
-    setSelectedOptionIndex(Math.max(selectedOptionIndex - 1, 0));
+    setSelectedOption(filteredOptions[selectedOptionIndex]);
     setShowOptions(false);
     setSearchTerm("");
-    setSelectedOption(filteredOptions[selectedOptionIndex]);
-    if (props.onChange) {
-      props.onChange(filteredOptions[selectedOptionIndex]);
+    if (onChange) {
+      onChange(filteredOptions[selectedOptionIndex]);
     }
   };
 
@@ -74,8 +71,13 @@ const CustomDropdown: React.FC<Props> = (props) => {
     <div className="custom-select">
       <input
         type="text"
-        className={`custom-select__input ${(props.required && !selectedOption && showOptions !== undefined) ? "required" : ""}`}
-        placeholder="Search option"
+        className={`custom-select__input ${
+          (required && !selectedOption && showOptions !== undefined) ||
+          forceRequired
+            ? "required"
+            : ""
+        }`}
+        placeholder={placeHolder || "Search or select options..."}
         value={selectedOption ? selectedOption.label : searchTerm}
         onChange={(e) => {
           if (selectedOption) {
@@ -86,18 +88,25 @@ const CustomDropdown: React.FC<Props> = (props) => {
         onFocus={handleFocus}
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
-
       />
-      <ul className={showOptions ? "custom-select__options show" : "custom-select__options hide"}>
+      <ul
+        className={
+          showOptions
+            ? "custom-select__options show"
+            : "custom-select__options hide"
+        }
+      >
         {filteredOptions.map((option, index) => (
           <li
-            className={`custom-select__option ${index === selectedOptionIndex ? "selected" : ""}`}
+            className={`custom-select__option ${
+              index === selectedOptionIndex ? "selected" : ""
+            }`}
             key={index}
             onClick={() => {
               setSelectedOption(option);
               setShowOptions(false);
-              if (props.onChange) {
-                props.onChange(option);
+              if (onChange) {
+                onChange(option);
               }
             }}
           >
@@ -105,7 +114,10 @@ const CustomDropdown: React.FC<Props> = (props) => {
           </li>
         ))}
       </ul>
-      {(props.required && !selectedOption && showOptions !== undefined) && <span className="required-message">{requiredMessage}</span>}
+      {(required && !selectedOption && showOptions !== undefined) ||
+        (forceRequired && (
+          <span className="required-message">{requiredMessage}</span>
+        ))}
     </div>
   );
 };
